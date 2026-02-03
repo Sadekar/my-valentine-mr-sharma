@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mr. Sharma 💖</title>
+
+<style>
+body {
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Comic Sans MS', cursive;
+    text-align: center;
+    overflow: hidden;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+h1 {
+    color: #ff4d6d;
+    font-size: 32px;
+}
+
+.sub {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 20px;
+    position: relative;
+}
+
+#yes {
+    background-color: #ff4d6d;
+    color: white;
+    box-shadow: 0 0 15px rgba(255,77,109,0.6);
+}
+
+#no {
+    background-color: #adb5bd;
+    color: white;
+    position: absolute;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    font-size: 22px;
+    animation: float 6s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+    <h1>Mr. Sharma 💖</h1>
+    <div class="sub">
+        Will you be my Valentine? 💘✨
+    </div>
+
+    <button id="yes">YES 💖</button>
+    <button id="no">Think again, Mr. Sharma 😏</button>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const music = document.getElementById("bgMusic");
+
+// NO button runs away
+noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - 150);
+    const y = Math.random() * (window.innerHeight - 150);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+
+// Floating hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 400);
+
+// Typing effect
+function typeText(element, text, speed = 50) {
+    let i = 0;
+    element.innerHTML = "";
+    const interval = setInterval(() => {
+        element.innerHTML += text.charAt(i);
+        i++;
+        if (i >= text.length) clearInterval(interval);
+    }, speed);
+}
+
+// YES click = love explosion
+yesBtn.addEventListener("click", () => {
+    music.play();
+
+    document.body.innerHTML = `
+        <div style="
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            font-family:'Comic Sans MS', cursive;
+            text-align:center;
+            padding:30px;
+        ">
+            <h1 id="loveText" style="color:#ff4d6d; font-size:34px;"></h1>
+        </div>
+    `;
+
+    const loveText = document.getElementById("loveText");
+
+    const message =
+      "Kapil 💖\n\n" +
+      "You clicked YES so confidently 😌\n\n" +
+      "But now let me say this properly...\n\n" +
+      "Kapindar 💕\n\n" +
+      "You are officially my Valentine 💍✨\n\n" +
+      "And just so you know 😏\n" +
+      "This comes with extra hugs, stolen kisses,\n" +
+      "and me being your favorite problem 💖\n\n" +
+      "No refunds. No escape.\n" +
+      "Only us 💕";
+
+    typeText(loveText, message, 40);
+});
+</script>
+
+</body>
+</html>
