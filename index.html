@@ -106,6 +106,7 @@
 
             // Only last NO moves
             if (clickCount === noTexts.length) {
+                noBtn.style.position = "absolute"; // make it movable
                 noBtn.addEventListener("mouseover", () => {
                     const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
                     const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
