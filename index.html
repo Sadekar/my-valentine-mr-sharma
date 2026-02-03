@@ -23,13 +23,18 @@
   }
 
   .card {
+    position: relative;
     background: #fff;
-    padding: 5vw;
+    padding: 3rem 2rem;      /* more uniform padding */
     max-width: 400px;
     width: 90%;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   h1 {
@@ -38,22 +43,45 @@
     color: #ff4d6d;
   }
 
-  .buttons {
+  /* .buttons {
     display: flex;
     justify-content: space-around;
     gap: 3vw;
     position: relative;
-  }
+  } */
+ .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;  /* space between YES and NO */
+    width: 100%;
+    position: relative;  /* needed for NO moving */
+ }
+
 
   button {
-    padding: 2vw 4vw;
-    font-size: 4vw;
+    padding: 1rem 2rem; /* uniform size */
+    font-size: 1.2rem;  /* readable on all screens */
     border: none;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
     transition: transform 0.3s ease, background 0.3s ease;
-    position: relative;
-  }
+  }  
+  @media (max-width: 500px) {
+    button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+   /* button {
+     padding: 2vw 4vw;
+     font-size: 4vw;
+     border: none;
+     border-radius: 10px;
+     cursor: pointer;
+     transition: transform 0.3s ease, background 0.3s ease;
+     position: relative;
+   } */
 
   .yes {
     background: #ff4d6d;
@@ -109,16 +137,34 @@
   });
 
   // Move NO button randomly after final message
-  noBtn.addEventListener('mouseenter', () => {
+ noBtn.addEventListener('mouseenter', () => {
     if(movableMode){
-      const cardRect = noBtn.parentElement.getBoundingClientRect();
-      const x = Math.random() * (cardRect.width - noBtn.offsetWidth);
-      const y = Math.random() * (cardRect.height - noBtn.offsetHeight);
-      noBtn.style.position = 'absolute';
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
+        const card = noBtn.parentElement.parentElement; // get card
+        const cardRect = card.getBoundingClientRect();
+        const btnRect = noBtn.getBoundingClientRect();
+
+        const maxX = cardRect.width - btnRect.width - 10;
+        const maxY = cardRect.height - btnRect.height - 10;
+
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
     }
-  });
+});
+
+  // noBtn.addEventListener('mouseenter', () => {
+  //   if(movableMode){
+  //     const cardRect = noBtn.parentElement.getBoundingClientRect();
+  //     const x = Math.random() * (cardRect.width - noBtn.offsetWidth);
+  //     const y = Math.random() * (cardRect.height - noBtn.offsetHeight);
+  //     noBtn.style.position = 'absolute';
+  //     noBtn.style.left = `${x}px`;
+  //     noBtn.style.top = `${y}px`;
+  //   }
+  // });
 
   // YES button action
   yesBtn.addEventListener('click', () => {
